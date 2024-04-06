@@ -1,0 +1,147 @@
+[project]
+name = "fastapi-project-structure"
+version = "0.1.0"
+description = "A template for FastAPI project"
+authors = [
+    {name = "nguyen1", email="nguyen1@gmail.com"}
+]
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "python=3.11.7",
+    "alembic=^1.13.1",
+    "uvicorn=^0.25.0",
+    "fastapi=^0.109.0",
+    "celery=^5.3.6",
+    "gunicorn=^21.2.0",
+    "fastapi-event=^0.1.3",
+    "pythondi=^1.2.4",
+    "ujson=^5.9.0",
+    "aiomysql=^0.2.0",
+    "click=^8.1.7",
+    "redis=^5.0.1",
+    "pydantic-settings=^2.1.0",
+    "pyjwt=^2.8.0",
+    "pytest-asyncio=^0.23.3",
+    "cryptography=^41.0.7",
+    "coverage=^7.4.0",
+    "sqlalchemy=^2.0.25",
+    "pymysql=^1.1.0",
+    "dependency-injector=^4.41.0",
+    "httpx=^0.26.0"
+]
+[project.optional-dependencies]
+dev = [
+    "black",
+    "ipython",
+    "mypy",
+    "pip-tools",
+    "pre-commit",
+    "pyproject-fmt",
+    "ruff",
+    "types-aiofiles",
+]
+test = [
+    "dirty-equals",
+    "polyfactory",
+    "pytest",
+    "pytest-anyio",
+    "pytest-cov",
+    "pytest-mock",
+]
+
+[tool.setuptools]
+py-modules = ["app"]
+
+[tool.black]
+line-length = 80
+target_version = ['py311']
+include = '\.pyi?$'
+force-exclude = '''
+(
+  /(
+     \.bzr
+    | \.direnv
+    | \.eggs
+    | \.git
+    | \.git-rewrite
+    | \.hg
+    | \.mypy_cache
+    | \.ruff_cache
+    | \.tox
+    | \.nox
+    | \.pants.d
+    | \.pytype
+    | \.venv
+    | \.svn
+    | \.ipynb_checkpoints
+    | \.egg-info
+    | __pypackages__
+    | _build
+    | buck-out
+    | build
+    | dist
+    | node_modules
+    | venv
+  )/
+)
+''' # To comply with ruff config
+
+[tool.ruff]
+line-length = 88
+target-version = 'py311'
+required-version = "0.0.280"
+extend-select = [
+    "D", # pydocstyle
+    "W", # pycodestyle
+    "C90", # mccabe
+    "I", # isort
+    "UP", # pyupgrade
+    "ASYNC", # flake8-async
+    "S", # flake8-bandit
+    "B", # flake8-bugbear
+    "ANN", # flake8-annotations
+    "S", # flake8-bandit
+    "C4", # flake8-comprehensions
+    "T10", # flake8-debugger
+    "INP", # flake8-no-pep420
+    "PT", # flake8-pytest-style
+    "TID", # flake8-tidy-imports
+    "PTH", # flake8-use-pathlib
+    "ERA", # eradicate
+    "Q", # flake8-quotes
+]
+[tool.ruff.per-file-ignores]
+# Ignore missing docstrings in migrations and alembic files
+"**/migrations/*.py" = ["D"]
+"**/migrations/env.py" = ["ERA001"]
+"**/tests/*.py" = ["S101"]
+"**/conftest.py" = ["S101"]
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+
+[tool.coverage.run]
+branch = true
+omit = [
+    "tests/*",
+]
+
+[tool.mypy]
+plugins = [
+    "pydantic.mypy",
+    "sqlalchemy.ext.mypy.plugin",
+]
+strict = true
+exclude = [
+    "tests",
+    "migrations",
+    "conftest.py",
+    "factories.py",
+]
