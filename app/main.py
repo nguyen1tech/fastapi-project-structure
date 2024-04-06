@@ -3,6 +3,8 @@ import sys
 from fastapi import FastAPI
 import yaml
 
+from asgi_correlation_id import CorrelationIdMiddleware
+
 from app.config import settings
 from app.containers import Container
 from app.users.router import router as user_router
@@ -33,7 +35,10 @@ def create_app() -> FastAPI:
         """,
     )
 
-    # Set logger
+    # Setup middlewares
+    application.add_middleware(CorrelationIdMiddleware)
+
+    # Setup logger
     setup_logger(config_file=settings.logging_config_file)
 
     # Register exception handlers
