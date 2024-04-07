@@ -8,6 +8,7 @@ from asgi_correlation_id import CorrelationIdMiddleware
 from app.config import settings
 from app.containers import Container
 from app.users.router import router as user_router
+from app.auth.router import router as auth_router
 from app.exception_handlers import (
     register_error_handlers as register_global_error_handlers,
 )
@@ -26,10 +27,10 @@ def setup_logger(config_file: str, default_level=logging.INFO) -> None:
 def create_app() -> FastAPI:
     _ = Container()
     application = FastAPI(
-        title=settings.project_name,
+        title=settings.PROJECT_NAME,
         docs_url="/docs",
         redoc_url="/re-docs",
-        openapi_url=f"{settings.api_prefix}/openapi.json",
+        openapi_url=f"{settings.API_PREFIX}/openapi.json",
         description="""
         The fastapi project template
         """,
@@ -39,13 +40,14 @@ def create_app() -> FastAPI:
     application.add_middleware(CorrelationIdMiddleware)
 
     # Setup logger
-    setup_logger(config_file=settings.logging_config_file)
+    setup_logger(config_file=settings.LOGGING_CONFIG_FILE)
 
     # Register exception handlers
     register_global_error_handlers(app=application)
 
     # application.add_middleware(DBSessionMiddleware, db_url=settings.DATABASE_URL)
-    application.include_router(user_router, prefix=settings.api_prefix)
+    application.include_router(user_router, prefix=settings.API_PREFIX)
+    application.include_router(auth_router, prefix=settings.API_PREFIX)
     # application.add_exception_handler(CustomException, http_exception_handler)
 
     return application

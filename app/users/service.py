@@ -24,6 +24,10 @@ class UserService:
         logger.info("Get user by id: %s", user_id)
         return self._repository.get_by_id(user_id)
 
+    def get_user_by_email(self, email: str) -> User:
+        logger.info("Get user by email: %s", email)
+        return self._repository.get_by_email(email)
+
     def delete_user_by_id(self, user_id: int) -> None:
         logger.info("Delete user by id: %s", user_id)
         return self._repository.delete_by_id(user_id)

@@ -14,9 +14,13 @@ class UserRepository:
     ) -> None:
         self.session_factory = session_factory
 
-    def insert(self, email: str, password: str, is_active: bool = True) -> User:
+    def insert(
+        self, email: str, password: str, name: str, is_active: bool = True
+    ) -> User:
         with self.session_factory() as session:
-            user = User(email=email, password=password, is_active=is_active)
+            user = User(
+                email=email, password=password, name=name, is_active=is_active
+            )
             session.add(user)
             session.commit()
             session.refresh(user)
@@ -32,6 +36,10 @@ class UserRepository:
             if not user:
                 raise NotFoundError("User not found")
             return user
+
+    def get_by_email(self, email: str) -> User:
+        with self.session_factory() as session:
+            return session.query(User).filter(User.email == email).first()
 
     def delete_by_id(self, user_id: int) -> None:
         pass

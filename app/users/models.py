@@ -10,4 +10,5 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True)
     password = Column(String)
+    name = Column(String)
     is_active = Column(Boolean, default=True)
