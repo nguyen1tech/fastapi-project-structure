@@ -20,7 +20,6 @@ def get_current_active_user(
         payload = decode_jwt_token(token=token)
         token_payload = TokenPayload(**payload)
     except (jwt.JWTError, ValidationError) as e:
-        print(e)
         raise AuthenticationError("Could not validate credentials") from e
     current_user: User = service.get_user_by_email(token_payload.sub)
     if not current_user:
