@@ -10,6 +10,7 @@ from app.containers import Container
 from app.users.router import router as user_router
 from app.auth.router import router as auth_router
 from app.modules.posts.router import router as post_router
+from app.modules.tags.router import router as tag_router
 from app.exception_handlers import (
     register_error_handlers as register_global_error_handlers,
 )
@@ -50,6 +51,7 @@ def create_app() -> FastAPI:
     application.include_router(user_router, prefix=settings.API_PREFIX)
     application.include_router(auth_router, prefix=settings.API_PREFIX)
     application.include_router(post_router, prefix=settings.API_PREFIX)
+    application.include_router(tag_router, prefix=settings.API_PREFIX)
 
     # application.add_exception_handler(CustomException, http_exception_handler)
 

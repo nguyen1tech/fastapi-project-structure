@@ -4,6 +4,8 @@ from app.auth.service import AuthService
 from app.database import Database
 from app.modules.posts.repository import PostRepository
 from app.modules.posts.service import PostService
+from app.modules.tags.repository import TagRepository
+from app.modules.tags.service import TagService
 from app.users.repository import UserRepository
 from app.users.service import UserService
 
@@ -16,6 +18,7 @@ class Container(containers.DeclarativeContainer):
             "app.auth.router",
             "app.auth.dependencies",
             "app.modules.posts.router",
+            "app.modules.tags.router",
         ]
     )
     config = providers.Configuration(yaml_files=["config.yml"])
@@ -38,4 +41,10 @@ class Container(containers.DeclarativeContainer):
     )
     post_service: PostService = providers.Factory(
         PostService, post_repository=post_repository
+    )
+    tag_repository: TagRepository = providers.Factory(
+        TagRepository, session_factory=db.provided.session
+    )
+    tag_service: TagService = providers.Factory(
+        TagService, tag_repository=tag_repository
     )
