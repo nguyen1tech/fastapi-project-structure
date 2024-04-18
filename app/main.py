@@ -27,7 +27,7 @@ def setup_logger(config_file: str, default_level=logging.INFO) -> None:
 
 
 def create_app() -> FastAPI:
-    _ = Container()
+    container = Container()
     application = FastAPI(
         title=settings.PROJECT_NAME,
         docs_url="/docs",
@@ -37,6 +37,8 @@ def create_app() -> FastAPI:
         The fastapi project template
         """,
     )
+
+    application.container = container
 
     # Setup middlewares
     application.add_middleware(CorrelationIdMiddleware)
