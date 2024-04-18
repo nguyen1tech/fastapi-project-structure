@@ -14,11 +14,13 @@ SQLALCHEMY_DATABASE_URL = "sqlite://"
 
 
 @pytest.fixture
-def db_session_factory() -> Generator[Callable[..., AbstractContextManager[Session]], None, None]:
+def db_session_factory() -> (
+    Generator[Callable[..., AbstractContextManager[Session]], None, None]
+):
     db = Database(SQLALCHEMY_DATABASE_URL)
     db.create_database()
     yield db.session
-    
+
     db.close()
 
 
