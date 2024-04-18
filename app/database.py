@@ -23,6 +23,9 @@ class Database:
             ),
         )
 
+    def close(self) -> None:
+        self._engine.dispose(close=True)
+
     def create_database(self) -> None:
         Base.metadata.create_all(self._engine)
 
