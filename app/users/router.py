@@ -26,7 +26,7 @@ def create_user(
     user_service: UserService = Depends(Provide[Container.user_service]),
 ) -> Any:
     user = user_service.create_user(
-        email=request.email, password=request.password
+        email=request.email, password=request.password, name=request.name
     )
     return CreateUserResponse(user_id=user.id)
 

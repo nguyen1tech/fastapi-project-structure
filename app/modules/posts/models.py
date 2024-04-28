@@ -6,6 +6,7 @@ from app.database import Base
 class Post(Base):
 
     __tablename__ = "posts"
+    __table_args__ = {'schema' : 'fastapi_example'}
 
     id = Column(Integer, primary_key=True)
     author_id = Column(Integer)

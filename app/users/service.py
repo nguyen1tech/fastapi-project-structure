@@ -12,9 +12,9 @@ class UserService:
     def __init__(self, user_repository: UserRepository) -> None:
         self._repository: UserRepository = user_repository
 
-    def create_user(self, email: str, password: str) -> User:
+    def create_user(self, email: str, password: str, name: str) -> User:
         logger.info("Create user with email: %s", email)
-        return self._repository.insert(email=email, password=password)
+        return self._repository.insert(email=email, password=password, name=name)
 
     def get_users(self) -> list[User]:
         logger.info("Getting all users")

@@ -7,6 +7,7 @@ from app.database import Base
 class Tag(Base):
 
     __tablename__ = "tags"
+    __table_args__ = {'schema' : 'fastapi_example'}
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer)
