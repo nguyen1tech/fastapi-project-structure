@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     LOGGING_CONFIG_FILE: str = os.path.join(BASE_DIR, "logging.yaml")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 1 day
     SECRET_KEY: str = "default secret key"
-    
+
     DATABASE_URL: str
 
 
