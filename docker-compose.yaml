@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  app:
+    container_name: fastapi-project-structure
+    image: fastapi-project-structure:latest
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14.11-alpine
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "65432:5432"
+
+volumes:
+  pg_data:
+    driver: "local"
