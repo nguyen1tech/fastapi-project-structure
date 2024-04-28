@@ -1,6 +1,7 @@
 from dependency_injector import containers, providers
 
 from app.auth.service import AuthService
+from app.config import settings
 from app.database import Database
 from app.modules.posts.repository import PostRepository
 from app.modules.posts.service import PostService
@@ -21,9 +22,10 @@ class Container(containers.DeclarativeContainer):
             "app.modules.tags.router",
         ]
     )
-    config = providers.Configuration(yaml_files=["config.yml"])
+    config = providers.Configuration()
+    config.from_dict(settings.model_dump(mode='json'))
 
-    db = providers.Singleton(Database, db_url=config.db.url)
+    db = providers.Singleton(Database, db_url=config.DATABASE_URL)
 
     user_repository: UserRepository = providers.Factory(
         UserRepository,
